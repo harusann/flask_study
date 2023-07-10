@@ -1,19 +1,14 @@
-from flask import Flask, request, redirect
+from flask import Flask
 from route.api import api
+from route.route import route
 import os
 from dotenv import load_dotenv
 
-app = Flask(__name__, static_folder='static', static_url_path='/')
+
+app = Flask(__name__)
 app.register_blueprint(api)
+app.register_blueprint(route)
 
-@app.route('/', methods=['GET'])
-def index():
-    return app.send_static_file('./templates/home.html')
-
-@app.route('/', methods=['POST'])
-def regist_user():
-    print(request)
-    return redirect('/templates/success.html')
 
 load_dotenv()
 
