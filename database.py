@@ -1,20 +1,21 @@
-from sqlalchemy import create_engine, Column, Integer, String, Identity
+from sqlalchemy import create_engine, Column, String
 from sqlalchemy.orm import sessionmaker, declarative_base
+from flask_login import UserMixin
 
 DB_URL = 'sqlite:///flask_study.sqlite3'
 
 engine = create_engine(DB_URL)
 base = declarative_base()
 
-class User(base):
+class User(UserMixin, base):
     __tablename__ = 'User'
 
-    email = Column('email', String(128), primary_key=True)
+    id = Column('id', String(64), primary_key=True)
     name = Column('name', String(128))
 
     def to_dict(self):
         user = {
-            "email":self.email,
+            "email":self.id,
             "name":self.name
         }
         return user

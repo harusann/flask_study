@@ -13,5 +13,13 @@
             print('Hello, World !')
         </code>
     </div>
+    <br>
+    <a href="/login/logout" class="logout">ログアウト</a>
+
+    <script>
+        fetch('/login/get-user')
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    </script>
 </body>
 </html>
