@@ -1,0 +1,5 @@
+flask
+flask-login
+sqlalchemy
+google-auth
+python-dotenv

@@ -9,7 +9,7 @@
 <body>
     <h2>success</h2>
     <div class="code-block">
-        <code>
+        <code id="hello-code">
             print('Hello, World !')
         </code>
     </div>
@@ -18,8 +18,22 @@
 
     <script>
         fetch('/login/get-user')
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then(res => {
+            $doc = document;
+            res.json().then(data => {
+                console.log(data);
+                if(data['result'])
+                    document.getElementById("hello-code").innerText = `print("Hello, ${data['data']['name']}!")`;
+                else {
+                    console.log(data['message']);
+                    window.location.href = '/';
+                }
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+            window.location.href = '/';
+        });
     </script>
 </body>
 </html>

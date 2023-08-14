@@ -27,6 +27,8 @@ def create_user():
         id = persed_request['sub']
         print(f'name : {name}, id : {id}')
         user = User(name=name, id=id)
+        client_session['id'] = id
+        client_session['name'] = name
 
         if session.query(User).filter(User.id == id).first() :
             login_user(user)
@@ -58,11 +60,24 @@ def create_user():
 @api.route('/get-user')
 @login_required
 def get_user():
-    return jsonify({'id':client_session.get('id')})
+    print(f'id : {client_session["id"]}')
+    return jsonify({
+        'result': True,
+        'data':{
+            'id':client_session["id"],
+            'name': client_session["name"]
+            }
+        }), 200
 
 
 @api.route('/logout')
 @login_required
 def logout():
+    # Session情報の削除
+    client_session.pop("id", None)
+    client_session.pop("name", None)
+
+    #ログアウト処理
     logout_user()
+
     return redirect('/templates/home.html')

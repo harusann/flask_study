@@ -1,4 +1,5 @@
 from flask import Blueprint, request, redirect
+from flask_login import LoginManager
 from google.auth import jwt
 import secrets
 
@@ -29,15 +30,6 @@ def default_route():
         print(decoded_data)
 
         return route.send_static_file('templates/success.html')
-
-        """
-        if not ('hd' in decoded_data) : # ドメインがgmail.comなら
-            return redirect('login_faild')
-        elif decoded_data['hd'] == 'oecu.jp': # oecu.jpなら
-            return route.send_static_file('templates/success.html')
-        else : # それ以外のドメインなら
-            return redirect('/login_faild')
-        """
 
 
 @route.route('/login_faild')
